@@ -1,13 +1,16 @@
 let x = 15;
 let y = 15;
 let image = new Image();
+let q = null;
 
 document.addEventListener("DOMContentLoaded" , (e) => {
 
     
     image.src = "js/pacman.png";
     image.onload = (e) => {
-        console.log(image , "Aaa");
+        console.log(image , "Aaa"  );
+        q = new Packman();
+        console.log(q);
     };
 
     animate();
@@ -25,30 +28,52 @@ function animate(){
     let context = canvas.getContext("2d");
     //context.clearRect(0,0,canvas.width , canvas.height);
     
-    if(x <= canvas.width - 20){
-        x++;
+
+    /*if(x <= canvas.width - 20){
+        x+= 1;
     }else{
-        y+= 5;
-        x = 10;
-    }
+        y+= 25;
+        x = 15;
+    }*/
     //console.log(x,y);
     
     //console.log(getImageData());
     setBackground(context , canvas.width , canvas.height);
     setBoundries(context);
     innerObstracles(context , canvas.width , canvas.height);
-    drawPackMan(context,x,y);
-    beans(context , canvas.width , canvas.height , x , y);
+    
+    if(q)
+    drawPackMan(context,q.x,q.y);
+    beans(context);
     requestAnimationFrame(animate);
+    context.fillStyle = "white";
+    //context.translate()
+    /*if(q){
+    console.log(q.x , q.y);
+    context.translate(q.x,q.y);
+    context.rotate(90 * Math.PI / 180);
+    context.fillRect(0,0,27,27); 
+    context.rotate(-90 * Math.PI / 180);
+    context.translate(-q.x,-q.y);
+}*/
 }
 
 function drawPackMan(context,x,y){
-    context.drawImage(image ,15,15,27,27);
+    //context.rotate(90 * Math.PI / 180);
+    
+    context.translate(72,26);
+    context.rotate(90 * Math.PI / 180);
+    context.drawImage(image, 0,0,27,27);
+    context.rotate(- (90 * Math.PI / 180));
+    context.translate(-72,-26);
+    //console.log(x);
+    
+    //context.rotate(-90 * Math.PI / 180);
 
 }
 
 
-function beans(context , width , height , x , y){
+function beans(context){
 
             let beanData = getBeans();
 
